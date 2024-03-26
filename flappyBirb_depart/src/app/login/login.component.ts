@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FlappyService } from '../services/flappy.service';
 
 @Component({
   selector: 'app-login',
@@ -18,20 +19,20 @@ export class LoginComponent implements OnInit {
   loginUsername : string = "";
   loginPassword : string = "";
 
-  constructor(public route : Router) { }
+  constructor(public route : Router, public service: FlappyService) { }
 
   ngOnInit() {
   }
 
   login(){
-
+    this.service.login(this.loginUsername, this.loginPassword)
 
     // Redirection si la connexion a réussi :
     this.route.navigate(["/play"]);
   }
 
   register(){
-
+    this.service.register(this.registerUsername,this.registerEmail,this.registerPassword,this.registerPasswordConfirm)
   }
 
 }

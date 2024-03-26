@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlappyAPI.Migrations
 {
     [DbContext(typeof(FlappyAPIContext))]
-    [Migration("20240326182011_InitialCreate")]
+    [Migration("20240326185457_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
