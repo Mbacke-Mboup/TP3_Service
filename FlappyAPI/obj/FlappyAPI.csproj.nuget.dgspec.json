@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\2274252\\Desktop\\TP3-Service\\FlappyAPI\\FlappyAPI.csproj": {}
+    "C:\\Users\\2274252\\Desktop\\TP3_Service\\FlappyAPI\\FlappyAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\2274252\\Desktop\\TP3-Service\\FlappyAPI\\FlappyAPI.csproj": {
+    "C:\\Users\\2274252\\Desktop\\TP3_Service\\FlappyAPI\\FlappyAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\2274252\\Desktop\\TP3-Service\\FlappyAPI\\FlappyAPI.csproj",
+        "projectUniqueName": "C:\\Users\\2274252\\Desktop\\TP3_Service\\FlappyAPI\\FlappyAPI.csproj",
         "projectName": "FlappyAPI",
-        "projectPath": "C:\\Users\\2274252\\Desktop\\TP3-Service\\FlappyAPI\\FlappyAPI.csproj",
+        "projectPath": "C:\\Users\\2274252\\Desktop\\TP3_Service\\FlappyAPI\\FlappyAPI.csproj",
         "packagesPath": "C:\\Users\\2274252\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\2274252\\Desktop\\TP3-Service\\FlappyAPI\\obj\\",
+        "outputPath": "C:\\Users\\2274252\\Desktop\\TP3_Service\\FlappyAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\2274252\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -41,9 +41,43 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.15, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[6.0.28, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.28, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.28, )"
+            },
+            "Microsoft.Extensions.Identity.Core": {
+              "target": "Package",
+              "version": "[6.0.15, )"
+            },
+            "Microsoft.Extensions.Identity.Stores": {
+              "target": "Package",
+              "version": "[6.0.15, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.16, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
+            },
+            "System.Diagnostics.Tools": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [
