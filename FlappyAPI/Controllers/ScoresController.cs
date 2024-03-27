@@ -19,14 +19,12 @@ namespace FlappyAPI.Controllers
     public class ScoresController : ControllerBase
     {
         private readonly FlappyAPIContext _context;
-        readonly UserManager<User> UserManager;
 
        
 
-        public ScoresController(FlappyAPIContext context, UserManager<User> userManager)
+        public ScoresController(FlappyAPIContext context,)
         {
             _context = context;
-            UserManager = userManager;
         }
 
         // GET: api/Scores
@@ -102,15 +100,23 @@ namespace FlappyAPI.Controllers
               return Problem("Entity set 'FlappyAPIContext.Score'  is null.");
           }
 
-            User user = await UserManager.FindByNameAsync(score.Pseudo);
-            score.User = user;
-            score.Date = DateTime.Now.ToString();
-            user.Scores.Add(score);
-            _context.Score.Add(score);
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            User? user = await _context.Users.FindAsync(userId);
+            if(user != null) {
+                score.User = user;
+                score.Date = DateTime.Now.ToString();
+                user.Scores.Add(score);
+                _context.Score.Add(score);
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+                return Ok(score);
 
-            return Ok(score);
+            }
+            return  StatusCode(StatusCodes.Status500InternalServerError,
+                    new { Message = "La création du score a échoué." }
+                    );
+
+
         }
 
         
