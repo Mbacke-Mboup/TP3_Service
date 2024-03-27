@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Score } from '../models/score';
+import { FlappyService } from '../services/flappy.service';
 
 @Component({
   selector: 'app-score',
@@ -12,12 +13,14 @@ export class ScoreComponent implements OnInit {
   publicScores : Score[] = [];
   userIsConnected : boolean = false;
 
-  constructor() { }
+  constructor(public service : FlappyService) { }
 
   async ngOnInit() {
 
     this.userIsConnected = sessionStorage.getItem("token") != null;
-
+    if(this.userIsConnected){
+     this.myScores = await this.service.getMyScores()
+    }
 
   }
 

@@ -10,6 +10,7 @@ using FlappyAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using FlappyAPI.Modelss;
+using System.Security.Claims;
 
 namespace FlappyAPI.Controllers
 {
@@ -39,7 +40,6 @@ namespace FlappyAPI.Controllers
             return await _context.Score.ToListAsync();
         }
 
-        // GET: api/Scores/5
         [HttpGet]
         public async Task<ActionResult<Score>> GetMyScores()
         {
@@ -47,14 +47,17 @@ namespace FlappyAPI.Controllers
           {
               return NotFound();
           }
-            var score = await _context.Score.FindAsync();
-
-            if (score == null)
+          string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            User? user = await _context.Users.FindAsync(userId);
+            if (user != null)
             {
-                return NotFound();
+                var scores = user.Scores.ToList();
+                return Ok(scores);
             }
+           
 
-            return score;
+            return NotFound();
+
         }
 
         // PUT: api/Scores/5
@@ -98,6 +101,7 @@ namespace FlappyAPI.Controllers
           {
               return Problem("Entity set 'FlappyAPIContext.Score'  is null.");
           }
+
             User user = await UserManager.FindByNameAsync(score.Pseudo);
             score.User = user;
             score.Date = DateTime.Now.ToString();

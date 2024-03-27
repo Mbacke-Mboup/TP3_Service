@@ -34,8 +34,8 @@ async login(Username:string, Password:string) : Promise<void>{
   
   let x = await lastValueFrom(this.http.post<any>(this.domain+"api/Users/Login", loginDTO))
   console.log(x.token);
-  localStorage.setItem("token", x.token)
-  if(localStorage.getItem("token")){
+  sessionStorage.setItem("token", x.token)
+  if(sessionStorage.getItem("token")){
     this.activeUser = Username;
 
   }
@@ -44,7 +44,7 @@ async login(Username:string, Password:string) : Promise<void>{
   }
 
   async postScore(score:Score):Promise<void>{
-    let token = localStorage.getItem("token")
+    let token = sessionStorage.getItem("token")
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':'application/json',
@@ -57,6 +57,19 @@ async login(Username:string, Password:string) : Promise<void>{
     
     
     
+  }
+
+  async getMyScores():Promise<Score[]>{
+    let token = sessionStorage.getItem("token")
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+ token
+      })
+    }
+
+    let x = await lastValueFrom(this.http.get<Score[]>(this.domain+"api/Scores/GetMyScores",  httpOptions))
+    return x;
   }
 }
 
