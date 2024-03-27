@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FlappyAPI.Data;
 using FlappyAPI.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using FlappyAPI.Modelss;
 
 namespace FlappyAPI.Controllers
 {
@@ -15,10 +18,14 @@ namespace FlappyAPI.Controllers
     public class ScoresController : ControllerBase
     {
         private readonly FlappyAPIContext _context;
+        readonly UserManager<User> UserManager;
 
-        public ScoresController(FlappyAPIContext context)
+       
+
+        public ScoresController(FlappyAPIContext context, UserManager<User> userManager)
         {
             _context = context;
+            UserManager = userManager;
         }
 
         // GET: api/Scores
@@ -83,6 +90,7 @@ namespace FlappyAPI.Controllers
 
         // POST: api/Scores
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Score>> PostScore(Score score)
         {
@@ -90,10 +98,15 @@ namespace FlappyAPI.Controllers
           {
               return Problem("Entity set 'FlappyAPIContext.Score'  is null.");
           }
+            User user = await UserManager.FindByNameAsync(score.Pseudo);
+            score.User = user;
+            score.Date = DateTime.Now.ToString();
+            user.Scores.Add(score);
             _context.Score.Add(score);
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetScore", new { id = score.Id }, score);
+            return Ok(score);
         }
 
         

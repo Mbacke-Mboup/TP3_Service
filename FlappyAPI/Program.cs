@@ -38,7 +38,7 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateIssuer = true,
         ValidAudience = "http://localhost:4200",
-        ValidIssuer = "http://localhost:7182",
+        ValidIssuer = "http://localhost:7059",
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Loooooooongue Phrase sinon ça ne marche pas !"))
     };
 });
