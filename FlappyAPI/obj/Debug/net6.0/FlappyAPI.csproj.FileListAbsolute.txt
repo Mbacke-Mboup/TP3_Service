@@ -254,3 +254,5 @@ C:\Users\2274252\Desktop\TP3_Service\FlappyAPI\obj\Debug\net6.0\refint\FlappyAPI
 C:\Users\2274252\Desktop\TP3_Service\FlappyAPI\obj\Debug\net6.0\FlappyAPI.pdb
 C:\Users\2274252\Desktop\TP3_Service\FlappyAPI\obj\Debug\net6.0\FlappyAPI.genruntimeconfig.cache
 C:\Users\2274252\Desktop\TP3_Service\FlappyAPI\obj\Debug\net6.0\ref\FlappyAPI.dll
+C:\Users\2274252\Desktop\TP3_Service\FlappyAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\2274252\Desktop\TP3_Service\FlappyAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll

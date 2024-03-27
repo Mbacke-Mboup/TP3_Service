@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 
 namespace FlappyAPI.Controllers
 {
@@ -56,8 +59,26 @@ namespace FlappyAPI.Controllers
            User user = await UserManager.FindByNameAsync(login.Username); 
             if(user != null && await UserManager.CheckPasswordAsync(user, login.Password))
             {
+                IList<string> roles = await UserManager.GetRolesAsync(user);
+                List<Claim> authClaims = new List<Claim>();
+                foreach (string role in roles)
+                {
+                    authClaims.Add(new Claim(ClaimTypes.Role, role));
+                }
+                authClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+                SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Loooooooongue Phrase sinon ça ne marche pas !"));
+                JwtSecurityToken token = new JwtSecurityToken(
+                    issuer: "http://localhost:7128",
+                    audience: "http://localhost:4200",
+                    claims: authClaims,
+                    expires: DateTime.Now.AddMinutes(30),
+                    signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
+                    );
+                return Ok(new {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    validTo = token.ValidTo
                 
-                return Ok();
+                });
             }
             else
             {

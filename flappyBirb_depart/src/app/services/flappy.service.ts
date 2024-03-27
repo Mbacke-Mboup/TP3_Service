@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 
@@ -7,7 +7,11 @@ import { lastValueFrom } from 'rxjs';
 })
 export class FlappyService {
 domain :string = "http://localhost:7059/"
-constructor(public http:HttpClient) { }
+token : string = "";
+
+constructor(public http:HttpClient) {
+  this.token = localStorage.getItem("token")!
+ }
 
 async register(Username:string, Email:string,Password:string,PasswordConfirm:string) : Promise<void>{
 let registerDTO = {
@@ -30,6 +34,18 @@ async login(Username:string, Password:string) : Promise<void>{
   
   let x = await lastValueFrom(this.http.post<any>(this.domain+"api/Users/Login", loginDTO))
   console.log(x);
+  localStorage.setItem("token", x.token)
   
   }
+
+  async getPublicScores():Promise<void>{
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+ this.token
+      })
+    }
+  }
 }
+
+
