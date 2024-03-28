@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FlappyAPI.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class seed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -165,7 +165,7 @@ namespace FlappyAPI.Migrations
                     TimeInSeconds = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ScoreValue = table.Column<int>(type: "int", nullable: false),
                     IsPublic = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -174,7 +174,29 @@ namespace FlappyAPI.Migrations
                         name: "FK_Score_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "c49c48a6-67a1-4a60-9e1c-161a8fd525d1", null, false, false, null, null, null, "AQAAAAEAACcQAAAAEHbwMH1Fo65Uc1po8USB73du4IY27/vge0ImR1N5urBCW5pm7QIldr+ug28rlu2z5Q==", null, false, "5128806d-b7ae-484f-a423-f229d309f295", false, "max" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "11111111-1111-1111-1111-111111111112", 0, "01cc13cd-997a-43cf-bb9f-608e761e44b3", null, false, false, null, null, null, null, null, false, "8eb15639-6b22-48c4-bff4-01a3b9f61e41", false, "bob" });
+
+            migrationBuilder.InsertData(
+                table: "Score",
+                columns: new[] { "Id", "Date", "IsPublic", "Pseudo", "ScoreValue", "TimeInSeconds", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "2024-03-28 22:06:47", true, "max", 54, "54.99", "11111111-1111-1111-1111-111111111111" },
+                    { 2, "2024-03-28 23:06:47", false, "max", 68, "64.99", "11111111-1111-1111-1111-111111111111" },
+                    { 3, "2024-03-28 22:06:47", true, "bob", 54, "54.99", "11111111-1111-1111-1111-111111111112" },
+                    { 4, "2024-03-28 23:06:47", false, "bob", 68, "64.99", "11111111-1111-1111-1111-111111111112" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -48,11 +48,6 @@ export class PlayComponent implements OnInit, OnDestroy{
     this.scoreSent = true;
 
 
-
-    
-
-
-
   }
 
 }

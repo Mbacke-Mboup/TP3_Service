@@ -49,6 +49,7 @@ namespace FlappyAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -56,6 +57,48 @@ namespace FlappyAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Score");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Date = "2024-03-28 22:06:47",
+                            IsPublic = true,
+                            Pseudo = "max",
+                            ScoreValue = 54,
+                            TimeInSeconds = "54.99",
+                            UserId = "11111111-1111-1111-1111-111111111111"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = "2024-03-28 23:06:47",
+                            IsPublic = false,
+                            Pseudo = "max",
+                            ScoreValue = 68,
+                            TimeInSeconds = "64.99",
+                            UserId = "11111111-1111-1111-1111-111111111111"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Date = "2024-03-28 22:06:47",
+                            IsPublic = true,
+                            Pseudo = "bob",
+                            ScoreValue = 54,
+                            TimeInSeconds = "54.99",
+                            UserId = "11111111-1111-1111-1111-111111111112"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Date = "2024-03-28 23:06:47",
+                            IsPublic = false,
+                            Pseudo = "bob",
+                            ScoreValue = 68,
+                            TimeInSeconds = "64.99",
+                            UserId = "11111111-1111-1111-1111-111111111112"
+                        });
                 });
 
             modelBuilder.Entity("FlappyAPI.Modelss.User", b =>
@@ -121,6 +164,33 @@ namespace FlappyAPI.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "11111111-1111-1111-1111-111111111111",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c49c48a6-67a1-4a60-9e1c-161a8fd525d1",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEHbwMH1Fo65Uc1po8USB73du4IY27/vge0ImR1N5urBCW5pm7QIldr+ug28rlu2z5Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "5128806d-b7ae-484f-a423-f229d309f295",
+                            TwoFactorEnabled = false,
+                            UserName = "max"
+                        },
+                        new
+                        {
+                            Id = "11111111-1111-1111-1111-111111111112",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "01cc13cd-997a-43cf-bb9f-608e761e44b3",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "8eb15639-6b22-48c4-bff4-01a3b9f61e41",
+                            TwoFactorEnabled = false,
+                            UserName = "bob"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -260,7 +330,9 @@ namespace FlappyAPI.Migrations
                 {
                     b.HasOne("FlappyAPI.Modelss.User", "User")
                         .WithMany("Scores")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
