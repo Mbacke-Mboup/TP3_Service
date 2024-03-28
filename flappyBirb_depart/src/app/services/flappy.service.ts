@@ -8,7 +8,6 @@ import { Score } from '../models/score';
 })
 export class FlappyService {
 domain :string = "http://localhost:7059/"
-activeUser: string =""
 
 constructor(public http:HttpClient) {
  }
@@ -35,10 +34,7 @@ async login(Username:string, Password:string) : Promise<void>{
   let x = await lastValueFrom(this.http.post<any>(this.domain+"api/Users/Login", loginDTO))
   console.log(x.token);
   sessionStorage.setItem("token", x.token)
-  if(sessionStorage.getItem("token")){
-    this.activeUser = Username;
-
-  }
+  
 
   
   }
@@ -71,6 +67,38 @@ async login(Username:string, Password:string) : Promise<void>{
     let x = await lastValueFrom(this.http.get<Score[]>(this.domain+"api/Scores/GetMyScores",  httpOptions))
     return x;
   }
+
+  
+  async getPublicScores():Promise<Score[]>{
+    let token = sessionStorage.getItem("token")
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+ token
+      })
+    }
+
+    let x = await lastValueFrom(this.http.get<Score[]>(this.domain+"api/Scores/GetPublicScores",  httpOptions))
+    return x;
+  }
+
+    
+  async changeVisibility(score:Score):Promise<void>{
+    let token = sessionStorage.getItem("token")
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+ token
+      })
+    }
+
+    await lastValueFrom(this.http.put(this.domain+"api/Scores/ChangeScoreVisibility/"+score.id,score,  httpOptions))
+  }
+
+  
 }
+
+
+
 
 

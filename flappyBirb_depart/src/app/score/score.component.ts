@@ -22,10 +22,13 @@ export class ScoreComponent implements OnInit {
      this.myScores = await this.service.getMyScores()
     }
 
+    this.publicScores = await this.service.getPublicScores()
+
   }
 
   async changeScoreVisibility(score : Score){
-
+    score.isPublic = !score.isPublic
+    await this.service.changeVisibility(score)
 
   }
 

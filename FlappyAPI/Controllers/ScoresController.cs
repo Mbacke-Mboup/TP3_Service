@@ -22,12 +22,12 @@ namespace FlappyAPI.Controllers
 
        
 
-        public ScoresController(FlappyAPIContext context,)
+        public ScoresController(FlappyAPIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Scores
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Score>>> GetPublicScores()
         {
@@ -35,7 +35,8 @@ namespace FlappyAPI.Controllers
           {
               return NotFound();
           }
-            return await _context.Score.ToListAsync();
+            
+            return await _context.Score.Where(s => s.IsPublic).ToListAsync();
         }
 
         [HttpGet]
@@ -60,6 +61,7 @@ namespace FlappyAPI.Controllers
 
         // PUT: api/Scores/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> ChangeScoreVisibility(int id, Score score)
         {
@@ -67,8 +69,19 @@ namespace FlappyAPI.Controllers
             {
                 return BadRequest();
             }
+            
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            User? user = await _context.Users.FindAsync(userId);
 
-            _context.Entry(score).State = EntityState.Modified;
+            if(user == null)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden,
+                    new { Message = "Vous n'êtes pas authorisé à faire cela." }
+                    );
+            }
+            Score scoreFinale = await _context.Score.FindAsync(score.Id);
+            scoreFinale.IsPublic = score.IsPublic;
+            _context.Score.Update(scoreFinale);
 
             try
             {
@@ -105,6 +118,7 @@ namespace FlappyAPI.Controllers
             if(user != null) {
                 score.User = user;
                 score.Date = DateTime.Now.ToString();
+                score.Pseudo = user.UserName;
                 user.Scores.Add(score);
                 _context.Score.Add(score);
                 _context.Users.Update(user);

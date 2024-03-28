@@ -42,7 +42,7 @@ export class PlayComponent implements OnInit, OnDestroy{
     let time = sessionStorage.getItem("time")!
     console.log(score + " "+ time);
 
-    let scoreInfo = new Score(0,this.service.activeUser,"",time,score,false)
+    let scoreInfo = new Score(0,"","",time,score,false)
 
      await this.service.postScore(scoreInfo)
     this.scoreSent = true;
