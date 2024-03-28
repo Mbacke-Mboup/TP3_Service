@@ -11,7 +11,7 @@ namespace FlappyAPI.Models
         public string TimeInSeconds { get; set; }
         public int ScoreValue { get; set; }
         public bool IsPublic { get; set; }
-        public string UserId { get; set; }
+        //public string UserId { get; set; }
         [JsonIgnore]
         public virtual User? User { get; set; }
 

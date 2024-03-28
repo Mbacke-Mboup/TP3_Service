@@ -41,14 +41,9 @@ async login(Username:string, Password:string) : Promise<void>{
 
   async postScore(score:Score):Promise<void>{
     let token = sessionStorage.getItem("token")
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':'application/json',
-        'Authorization':'Bearer '+ token
-      })
-    }
+    
 
-    let x = await lastValueFrom(this.http.post<Score>(this.domain+"api/Scores/PostScore", score, httpOptions))
+    let x = await lastValueFrom(this.http.post<Score>(this.domain+"api/Scores/PostScore", score))
     console.log(x);
     
     

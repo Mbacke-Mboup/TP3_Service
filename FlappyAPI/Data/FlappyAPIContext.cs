@@ -35,11 +35,11 @@ namespace FlappyAPI.Data
                 UserName = "bob",
                 
             };
-            u1.PasswordHash = hasher.HashPassword(u1, "12345");
+            u2.PasswordHash = hasher.HashPassword(u2, "12345");
             
             builder.Entity<User>().HasData(u1,u2);
             builder.Entity<Score>().HasData(
-                new Score()
+                new
                 {
                     Id = 1,
                     Date = DateTime.UtcNow.AddHours(1).ToString(),
@@ -49,7 +49,7 @@ namespace FlappyAPI.Data
                     Pseudo = u1.UserName,
                     UserId = "11111111-1111-1111-1111-111111111111"
                 },
-                new Score()
+                new
                 {
                     Id = 2,
                     Date = DateTime.UtcNow.AddHours(2).ToString(),
@@ -59,7 +59,7 @@ namespace FlappyAPI.Data
                     Pseudo = u1.UserName,
                     UserId = "11111111-1111-1111-1111-111111111111"
                 },
-                 new Score()
+                 new
                  {
                      Id = 3,
                      Date = DateTime.UtcNow.AddHours(1).ToString(),
@@ -69,7 +69,7 @@ namespace FlappyAPI.Data
                      Pseudo = u2.UserName,
                      UserId = "11111111-1111-1111-1111-111111111112"
                  },
-                new Score()
+                new
                 {
                     Id = 4,
                     Date = DateTime.UtcNow.AddHours(2).ToString(),
