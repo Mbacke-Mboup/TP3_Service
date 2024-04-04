@@ -14,6 +14,7 @@ builder.Services.AddDbContext<FlappyAPIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FlappyAPIContext") ?? throw new InvalidOperationException("Connection string 'FlappyAPIContext' not found."));
     options.UseLazyLoadingProxies();
 });
+builder.Services.AddScoped<ScoreService>();
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<FlappyAPIContext>();
 builder.Services.Configure<IdentityOptions>(options =>
 {

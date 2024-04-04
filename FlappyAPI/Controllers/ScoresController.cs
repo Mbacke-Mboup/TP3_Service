@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using FlappyAPI.Modelss;
 using System.Security.Claims;
+using Castle.Core.Internal;
 
 namespace FlappyAPI.Controllers
 {
@@ -18,39 +19,39 @@ namespace FlappyAPI.Controllers
     [ApiController]
     public class ScoresController : ControllerBase
     {
-        private readonly FlappyAPIContext _context;
+        private readonly ScoreService _service;
 
        
 
-        public ScoresController(FlappyAPIContext context)
+        public ScoresController(ScoreService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Score>>> GetPublicScores()
         {
-          if (_context.Score == null)
+          if (!_service.APIWorking())
           {
               return NotFound();
           }
             
-            return await _context.Score.Where(s => s.IsPublic).ToListAsync();
+            return await _service.GetAllScores();
         }
 
         [HttpGet]
         public async Task<ActionResult<Score>> GetMyScores()
         {
-          if (_context.Score == null)
+          if (!_service.APIWorking())
           {
               return NotFound();
           }
           string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            User? user = await _context.Users.FindAsync(userId);
-            if (user != null)
+            
+            List<Score> scores = await _service.GetScoresOf(userId);
+            if (scores != null)
             {
-                var scores = user.Scores.ToList();
                 return Ok(scores);
             }
            
@@ -71,34 +72,14 @@ namespace FlappyAPI.Controllers
             }
             
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            User? user = await _context.Users.FindAsync(userId);
 
-            if(user == null)
+            if(!await _service.ChangeScoreVisibility(score, userId))
             {
                 return StatusCode(StatusCodes.Status403Forbidden,
                     new { Message = "Vous n'êtes pas authorisé à faire cela." }
                     );
             }
-            Score scoreFinale = await _context.Score.FindAsync(score.Id);
-            scoreFinale.IsPublic = score.IsPublic;
-            _context.Score.Update(scoreFinale);
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ScoreExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+           
             return NoContent();
         }
 
@@ -108,22 +89,16 @@ namespace FlappyAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Score>> PostScore(Score score)
         {
-          if (_context.Score == null)
+          if (!_service.APIWorking())
           {
               return Problem("Entity set 'FlappyAPIContext.Score'  is null.");
           }
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            User? user = await _context.Users.FindAsync(userId);
-            if(user != null) {
-                score.User = user;
-                score.Date = DateTime.Now.ToString();
-                score.Pseudo = user.UserName;
-                user.Scores.Add(score);
-                _context.Score.Add(score);
-                _context.Users.Update(user);
-                await _context.SaveChangesAsync();
-                return Ok(score);
+            var scoreResult = await _service.AddScore(score,userId);
+            if(scoreResult != null) {
+                
+                return Ok(scoreResult);
 
             }
             return  StatusCode(StatusCodes.Status500InternalServerError,
@@ -135,9 +110,6 @@ namespace FlappyAPI.Controllers
 
         
 
-        private bool ScoreExists(int id)
-        {
-            return (_context.Score?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        
     }
 }
