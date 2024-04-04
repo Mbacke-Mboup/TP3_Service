@@ -26,6 +26,9 @@ namespace FlappyAPI.Data
             {
                 Id = "11111111-1111-1111-1111-111111111111",
                 UserName = "max",
+                Email = "max@gmail.com",
+                NormalizedEmail = "MAX@GMAIL.COM",
+                NormalizedUserName = "MAX",
             };
             u1.PasswordHash = hasher.HashPassword(u1, "12345");
 
@@ -33,7 +36,10 @@ namespace FlappyAPI.Data
             {
                 Id = "11111111-1111-1111-1111-111111111112",
                 UserName = "bob",
-                
+                Email = "bob@gmail.com",
+                NormalizedEmail = "BOB@GMAIL.COM",
+                NormalizedUserName = "BOB",
+
             };
             u2.PasswordHash = hasher.HashPassword(u2, "12345");
             

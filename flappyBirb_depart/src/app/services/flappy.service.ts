@@ -40,9 +40,6 @@ async login(Username:string, Password:string) : Promise<void>{
   }
 
   async postScore(score:Score):Promise<void>{
-    let token = sessionStorage.getItem("token")
-    
-
     let x = await lastValueFrom(this.http.post<Score>(this.domain+"api/Scores/PostScore", score))
     console.log(x);
     
@@ -51,43 +48,25 @@ async login(Username:string, Password:string) : Promise<void>{
   }
 
   async getMyScores():Promise<Score[]>{
-    let token = sessionStorage.getItem("token")
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':'application/json',
-        'Authorization':'Bearer '+ token
-      })
-    }
+    
 
-    let x = await lastValueFrom(this.http.get<Score[]>(this.domain+"api/Scores/GetMyScores",  httpOptions))
+    let x = await lastValueFrom(this.http.get<Score[]>(this.domain+"api/Scores/GetMyScores"))
     return x;
   }
 
   
   async getPublicScores():Promise<Score[]>{
-    let token = sessionStorage.getItem("token")
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':'application/json',
-        'Authorization':'Bearer '+ token
-      })
-    }
+    
 
-    let x = await lastValueFrom(this.http.get<Score[]>(this.domain+"api/Scores/GetPublicScores",  httpOptions))
+    let x = await lastValueFrom(this.http.get<Score[]>(this.domain+"api/Scores/GetPublicScores"))
     return x;
   }
 
     
   async changeVisibility(score:Score):Promise<void>{
-    let token = sessionStorage.getItem("token")
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':'application/json',
-        'Authorization':'Bearer '+ token
-      })
-    }
+    
 
-    await lastValueFrom(this.http.put(this.domain+"api/Scores/ChangeScoreVisibility/"+score.id,score,  httpOptions))
+    await lastValueFrom(this.http.put(this.domain+"api/Scores/ChangeScoreVisibility/"+score.id,score))
   }
 
   

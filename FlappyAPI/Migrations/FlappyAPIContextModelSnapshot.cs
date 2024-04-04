@@ -61,7 +61,7 @@ namespace FlappyAPI.Migrations
                         new
                         {
                             Id = 1,
-                            Date = "2024-03-28 22:51:22",
+                            Date = "2024-04-04 20:27:05",
                             IsPublic = true,
                             Pseudo = "max",
                             ScoreValue = 54,
@@ -71,7 +71,7 @@ namespace FlappyAPI.Migrations
                         new
                         {
                             Id = 2,
-                            Date = "2024-03-28 23:51:22",
+                            Date = "2024-04-04 21:27:05",
                             IsPublic = false,
                             Pseudo = "max",
                             ScoreValue = 68,
@@ -81,7 +81,7 @@ namespace FlappyAPI.Migrations
                         new
                         {
                             Id = 3,
-                            Date = "2024-03-28 22:51:22",
+                            Date = "2024-04-04 20:27:05",
                             IsPublic = true,
                             Pseudo = "bob",
                             ScoreValue = 54,
@@ -91,7 +91,7 @@ namespace FlappyAPI.Migrations
                         new
                         {
                             Id = 4,
-                            Date = "2024-03-28 23:51:22",
+                            Date = "2024-04-04 21:27:05",
                             IsPublic = false,
                             Pseudo = "bob",
                             ScoreValue = 68,
@@ -169,12 +169,15 @@ namespace FlappyAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5fa0a957-3da7-46b6-a6c0-3d0b8937ba5a",
+                            ConcurrencyStamp = "e88402e5-09b9-4b73-bc71-a56e1b7ba95f",
+                            Email = "max@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEIYXxjuv17wKHn7KCDqEiRpEvIrsbR40nxZqVCHP2bSyfowoA0E9pUnaV4j21gqSPQ==",
+                            NormalizedEmail = "MAX@GMAIL.COM",
+                            NormalizedUserName = "MAX",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAiy8dLTOBUAHJ55UkEgqmOzIW3LM/gjeuIt7cfcewuwq1LrW4qXA/x3TyXFo34sVg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0868a6a5-1060-408c-80a1-5ef4ae788693",
+                            SecurityStamp = "da0091fc-6b49-41ff-95f1-4289b0576137",
                             TwoFactorEnabled = false,
                             UserName = "max"
                         },
@@ -182,12 +185,15 @@ namespace FlappyAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111112",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "af9c4d7a-86dd-4d1c-966e-a089248698fa",
+                            ConcurrencyStamp = "521d606a-0443-48f9-a956-af32f5c24ad1",
+                            Email = "bob@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEF502TUui+CUkRysXw0vxH8yhKyvkG3zenX6qJmDHxM8XNd7dI8oricHqPUusv5QHg==",
+                            NormalizedEmail = "BOB@GMAIL.COM",
+                            NormalizedUserName = "BOB",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBAt4WkdDQ45gjqAQ8Bp96wuqFjLsjE7AdcglEvac/cCkeBw6912dmcAg+xsHpMV6g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "73cee4f8-59a3-49ab-93bd-27f6df365deb",
+                            SecurityStamp = "388e5bf9-6880-45a2-b536-42ba18838a08",
                             TwoFactorEnabled = false,
                             UserName = "bob"
                         });
